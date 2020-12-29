@@ -1,0 +1,10 @@
+th, td{
+    border: 1px solid;
+    width: 300px;
+}
+tr{
+    display: flex;
+}
+th, td{
+    text-align: center;
+}
