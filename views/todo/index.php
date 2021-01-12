@@ -1,9 +1,9 @@
 <?php
-require_once(dirname(__FILE__, 3).'/controllers/TodoController.php');
-$tables = new TodoController;
-$tables->index($dbh);
-$user = $tables->user;
-$todos = $tables->todos;
+require_once(dirname(__FILE__, 3).'/models/Todo.php');
+$controller = new Todo;
+$controller->findAll();
+// $user = $controller->user;
+$todos = $controller->todos;
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ $todos = $tables->todos;
   <title>todoリスト</title>
 </head>
 <body>
-  <p class="title">userテーブル</p>
+  <!-- <p class="title">userテーブル</p> -->
   <!-- <ul class="user">
     <?php for($i = 0; $i < count($user); $i++): ?>
       <?php foreach($user[$i] as $key=>$value): ?>
