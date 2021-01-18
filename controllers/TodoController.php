@@ -1,12 +1,15 @@
 <?php
 class TodoController{
-    public $user;
+    public function __construct(){
+        require_once(dirname(__FILE__, 2).'/models/TodoModel.php');
+    }
     public function index(){
-        // $sql_user = 'select * from user';
-        // $prepare_user = $dbh->prepare($sql_user);
-        // $prepare_user->execute();
-        // $this->user = $prepare_user->fetchAll(pdo::FETCH_ASSOC);
+        new Todo;
+        return Todo::findAll();
+    }
+    public function getDetail($id){
+        new Todo;
+        return Todo::findDetail($id);
     }
 }
-
 ?>
