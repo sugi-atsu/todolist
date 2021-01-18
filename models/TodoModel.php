@@ -1,8 +1,6 @@
 <?php
 class Todo{
     public static $dbh;
-    public static $todos;
-    public static $todo;
     public function __construct(){
         require_once(dirname(__FILE__, 2).'/config/database.php');
         self::$dbh = $dbh;
