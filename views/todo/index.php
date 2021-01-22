@@ -14,15 +14,19 @@ $todos = $controller->index();
 </head>
 <body>
   <p>一覧画面</p>
-  <ul>
-    <?php for($i = 0; $i < count($todos); $i++): ?>
-      <li>
-        <input type="checkbox">
-        <a href='./detail.php?id=<?php echo $todos[$i]['id'] ?>'>
-          <?php echo $todos[$i]['title'] ?>
-        </a>
-      </li>
-    <?php endfor; ?>
-  </ul>
+  <?php if($todos): ?>
+    <ul>
+      <?php for($i = 0; $i < count($todos['todos']); $i++): ?>
+        <li>
+          <input type="checkbox">
+          <a href='./detail.php?id=<?php echo $todos['todos'][$i]['id']; ?>'>
+            <?php echo $todos['todos'][$i]['title']; ?>
+          </a>
+        </li>
+      <?php endfor; ?>
+    </ul>
+  <?php else: ?>
+    <p>まだTodoリストがありません</p>
+  <?php endif; ?>
 </body>
 </html>
