@@ -9,12 +9,8 @@ class TodoController{
         return $data;
     }
     public function detail(){
-        $column = Todo::findAllid();
-        foreach($column as $row){
-            $idNums[] = $row['id'];
-        }
         $id = $_GET['id'];
-        if(in_array($id,$idNums)){
+        if(Todo::isExistById($id)){
             $todo_list = Todo::findById($id);
             return $todo_list;
         }else{

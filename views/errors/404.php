@@ -8,5 +8,6 @@
 <body>
   <p>404エラー</p>
   <p>Todoリストがありません</p>
+  <button><a href="../todo/index.php">ホームへ戻る</a></button>
 </body>
 </html>
