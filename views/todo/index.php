@@ -14,6 +14,9 @@ $todos = $controller->index();
 </head>
 <body>
   <p>一覧画面</p>
+  <button>
+    <a href="./new.php">新規作成</a>
+  </button>
   <?php if($todos): ?>
     <ul>
       <?php for($i = 0; $i < count($todos['todos']); $i++): ?>

@@ -3,14 +3,14 @@ require_once(dirname(__FILE__, 2).'/config/database.php');
 class Todo{
     public static function findAll(){
         $dbh = new PDO(DSN, USER, PASS);
-        $sql = 'select * from todos where id = 1';
+        $sql = 'select * from todos where user_id = 1';
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll(pdo::FETCH_ASSOC);
     }
     public static function isExistById($id){
         $dbh = new PDO(DSN, USER, PASS);
-        $sql = "select * from todos where id = :id";
+        $sql = "select * from todos where user_id = 1 and id = :id";
         $stmt = $dbh->prepare($sql);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
@@ -27,6 +27,14 @@ class Todo{
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         return $stmt->fetch(pdo::FETCH_ASSOC);
+    }
+    public static function insertNewTable($title,$text){
+        $dbh = new PDO(DSN, USER, PASS);
+        $sql = "insert into todos (user_id, title, text) values (1, :title, :text)";
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':title', $title);
+        $stmt->bindValue(':text', $text);
+        $stmt->execute();
     }
 }
 ?>
