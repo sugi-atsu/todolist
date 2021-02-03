@@ -6,7 +6,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     header('Location: ./index.php');
     exit;
 }
+session_start();
+$errorMsgs = $_SESSION['errorMsgs'];
+unset($_SESSION['errorMsgs']);
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -23,5 +29,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <textarea name="text" id="" cols="30" rows="10"></textarea>
         <button type="submit">新規作成</button>
     </form>
+    <?php if(isset($errorMsgs)) : ?>
+        <ul>
+            <?php foreach($errorMsgs as $errorMsg): ?>
+                <li><?php echo $errorMsg;?></li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif ; ?>
 </body>
 </html>

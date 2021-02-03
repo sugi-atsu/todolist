@@ -1,5 +1,6 @@
 <?php
 require_once(dirname(__FILE__, 2).'/models/TodoModel.php');
+require_once(dirname(__FILE__, 2).'/validatons/TodoValidation.php');
 class TodoController{
     public function index(){
         $todos = Todo::findAll();
@@ -19,9 +20,22 @@ class TodoController{
         return $todo_list;
     }
     public function new(){
-        $title = $_POST['title'];
-        $text = $_POST['text'];
-        Todo::insertNewTable($title,$text);
+        $data = [
+            'title'=>$_POST['title'],
+            'text'=>$_POST['text'],
+        ];
+        $validation = new TodoValidation;
+        $validation->setData($data);
+        if($validation->check() === false){
+            $errorMsgs = $validation->getErrorMsgs();
+            session_start();
+            $_SESSION['errorMsgs'] = $errorMsgs;
+            header('Location: ../../views/todo/new.php');
+            exit;
+        }else{
+            Todo::save($data['title'], $data['text']);
+        }
     }
 }
+
 ?>

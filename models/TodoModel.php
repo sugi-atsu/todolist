@@ -28,7 +28,7 @@ class Todo{
         $stmt->execute();
         return $stmt->fetch(pdo::FETCH_ASSOC);
     }
-    public static function insertNewTable($title,$text){
+    public static function save($title,$text){
         $dbh = new PDO(DSN, USER, PASS);
         $sql = "insert into todos (user_id, title, text) values (1, :title, :text)";
         $stmt = $dbh->prepare($sql);
