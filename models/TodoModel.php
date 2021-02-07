@@ -29,12 +29,21 @@ class Todo{
         return $stmt->fetch(pdo::FETCH_ASSOC);
     }
     public static function save($title,$text){
-        $dbh = new PDO(DSN, USER, PASS);
-        $sql = "insert into todos (user_id, title, text) values (1, :title, :text)";
-        $stmt = $dbh->prepare($sql);
-        $stmt->bindValue(':title', $title);
-        $stmt->bindValue(':text', $text);
-        $stmt->execute();
+        try{
+            $dbh = new PDO(DSN, USER, PASS);
+            $sql = "insert into todos (user_id, title, text) values (1, :title, :text)";
+            $stmt = $dbh->prepare($sql);
+            $dbh->beginTransaction();
+            throw new Exception('処理できませんでした');
+            $stmt->bindValue(':title', $title);
+            $stmt->bindValue(':text', $text);
+            $stmt->execute();
+            $dbh->commit();
+        }catch(Exception $e){
+            $dbh->rollBack();
+            error_log($e->getMessage(), 3, "./error.log");
+            return false;
+        }
     }
 }
 ?>

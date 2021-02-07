@@ -22,7 +22,7 @@ class TodoController{
     public function new(){
         $data = [
             'title'=>$_POST['title'],
-            'text'=>$_POST['text'],
+            'text'=>$_POST['text']
         ];
         $validation = new TodoValidation;
         $validation->setData($data);
@@ -32,10 +32,11 @@ class TodoController{
             $_SESSION['errorMsgs'] = $errorMsgs;
             header('Location: ../../views/todo/new.php');
             exit;
-        }else{
-            Todo::save($data['title'], $data['text']);
+        }
+        if(Todo::save($data['title'], $data['text']) === false){
+            header('Location: ../../views/todo/new.php');
+            exit;
         }
     }
 }
-
 ?>
