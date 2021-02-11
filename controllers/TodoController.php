@@ -1,5 +1,5 @@
 <?php
-require_once(dirname(__FILE__, 2).'/models/TodoModel.php');
+require_once(dirname(__FILE__, 2).'/models/Todo.php');
 require_once(dirname(__FILE__, 2).'/validatons/TodoValidation.php');
 class TodoController{
     public function index(){
@@ -33,10 +33,32 @@ class TodoController{
             header('Location: ../../views/todo/new.php');
             exit;
         }
-        if(Todo::save($data['title'], $data['text']) === false){
+        if(Todo::save($data) === false){
             header('Location: ../../views/todo/new.php');
             exit;
         }
     }
+    public function edit(){
+        $data = [
+            'title'=>$_POST['title'],
+            'text'=>$_POST['text'],
+            'todo_id'=>$_POST['todo_id']
+        ];
+        $validation = new TodoValidation;
+        $validation->setData($data);
+        if($validation->check() === false){
+            $errorMsgs = $validation->getErrorMsgs();
+            session_start();
+            $_SESSION['errorMsgs'] = $errorMsgs;
+            header("Location: ../../views/todo/edit.php?todo_id=".$data['todo_id']);
+            exit;
+        }
+        if(Todo::update($data) === false){
+            header("Location: ../../views/todo/edit.php?todo_id=".$data['todo_id']);
+            exit;
+        }
+
+    }
 }
+
 ?>

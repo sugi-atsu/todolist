@@ -17,5 +17,8 @@ $todo = $controller->detail();
     <li><?php echo $todo['title'];?></li>
     <li><?php echo $todo['text'];?></li>
   </ul>
+  <button>
+    <a href="./edit.php?todo_id=<?php echo $todo['id']?>">編集</a>
+  </button>
 </body>
 </html>

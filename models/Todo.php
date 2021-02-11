@@ -28,22 +28,39 @@ class Todo{
         $stmt->execute();
         return $stmt->fetch(pdo::FETCH_ASSOC);
     }
-    public static function save($title,$text){
+    public static function save($data){
         try{
             $dbh = new PDO(DSN, USER, PASS);
             $sql = "insert into todos (user_id, title, text) values (1, :title, :text)";
             $stmt = $dbh->prepare($sql);
             $dbh->beginTransaction();
-            throw new Exception('処理できませんでした');
-            $stmt->bindValue(':title', $title);
-            $stmt->bindValue(':text', $text);
+            // throw new Exception('新規作成できませんでした');
+            $stmt->bindValue(':title', $data['title']);
+            $stmt->bindValue(':text', $data['text']);
             $stmt->execute();
             $dbh->commit();
         }catch(Exception $e){
             $dbh->rollBack();
-            error_log($e->getMessage(), 3, "./error.log");
+            return false;
+        }
+    }
+    public static function update($data){
+        try{
+            $dbh = new PDO(DSN, USER, PASS);
+            $sql = "update todos set title=:title, text=:text where id = :todo_id";
+            $stmt = $dbh->prepare($sql);
+            $dbh->beginTransaction();
+            // throw new Exception('更新できませんでした');
+            $stmt->bindValue(':title', $data['title']);
+            $stmt->bindValue(':text', $data['text']);
+            $stmt->bindValue(':todo_id', $data['todo_id']);
+            $stmt->execute();
+            $dbh->commit();
+        }catch(Exception $e){
+            $dbh->rollBack();
             return false;
         }
     }
 }
+
 ?>
